@@ -9,9 +9,6 @@ let paintButton = document.getElementById("paint-btn");
 let widthValue = document.getElementById("width-value");
 let heightValue = document.getElementById("height-value");
 
-// const colorSwatchesContainer = document.querySelector(".color-swatches");
-
-// let selectedColor = null;
 
 // const predefinedColors = [
 //     "#000000",
@@ -141,31 +138,6 @@ let draw = false;
 let erase = false;
 
 
-// predefinedColors.forEach((color) => {
-//     const colorSwatch = document.createElement("div");
-//     colorSwatch.classList.add("color-swatch");
-//     colorSwatch.style.backgroundColor = color;
-//     colorSwatch.addEventListener("click", () => {
-//        colorInput.value = color;
-//     });
-//
-//     colorSwatchesContainer.appendChild(colorSwatch);
-// });
-
-
-// let updateSelectedColor = () => {
-//     selectedColor = colorInput.value;
-//     if (selectedColor) {
-//         colorSwatchesContainer.querySelectorAll(".color-swatch").forEach((swatch) => {
-//             swatch.classList.remove("selected");
-//             if (swatch.style.backgroundColor === selectedColor)
-//                 swatch.classList.add("selected");
-//         });
-//     }
-// }
-//
-// colorInput.addEventListener("input", updateSelectedColor);
-
 const isTouchDevice = () => {
     try {
         document.createEvent("TouchEvent");
@@ -181,19 +153,83 @@ const isTouchDevice = () => {
 isTouchDevice();
 
 createGridButton.addEventListener("click", () => {
-    container.innerHTML = "";
-    // let count = 0;
+    createGrid(gridWidth.value, gridHeight.value);
+});
 
-    for (let i = 0; i < gridHeight.value; i++) {
-        // count += 2;
+
+clearGridButton.addEventListener("click", () => {
+    // container.innerHTML = "";
+    const gridCols = document.querySelectorAll('.gridCol');
+    gridCols.forEach((col) => {
+        col.style.backgroundColor = "transparent";
+    });
+});
+
+
+eraseButton.addEventListener("click", () => {
+    erase = true;
+});
+
+
+paintButton.addEventListener("click", () => {
+    erase = false;
+});
+
+
+gridWidth.addEventListener("input", () => {
+    widthValue.innerHTML = gridWidth.value;
+});
+
+
+gridHeight.addEventListener("input", () => {
+    heightValue.innerHTML = gridHeight.value;
+});
+
+
+window.onload = () => {
+    gridHeight.value = 0;
+    gridWidth.value = 0;
+}
+
+
+// Image Handling
+const imageUpload = document.getElementById('image-upload');
+
+let imageWidth, imageHeight;
+
+
+imageUpload.addEventListener('change', function (e) {
+    const file = e.target.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+            const image = new Image();
+            image.src = './resource/images/casque.jpg';
+            image.onload = function () {
+                imageWidth = image.naturalWidth;
+                imageHeight = image.naturalHeight;
+
+                createGrid(imageWidth, imageHeight);
+            }
+        };
+
+        reader.readAsDataURL(file);
+    }
+});
+
+
+let createGrid = ((width, height) => {
+    container.innerHTML = "";
+
+    for (let i = 0; i < height; i++) {
         let divRow = document.createElement("div");
         divRow.classList.add("gridRow");
 
-        for (let j = 0; j < gridWidth.value; j++) {
-            // count += 2;
+        for (let j = 0; j < width; j++) {
             let col = document.createElement("div");
             col.classList.add("gridCol");
-            // col.setAttribute("id", `gridCol${count}`);
 
             col.addEventListener(events[deviceType].down, () => {
                 draw = true;
@@ -225,38 +261,7 @@ createGridButton.addEventListener("click", () => {
 
             divRow.appendChild(col);
         }
-        
+
         container.appendChild(divRow);
     }
 });
-
-
-clearGridButton.addEventListener("click", () => {
-    container.innerHTML = "";
-});
-
-
-eraseButton.addEventListener("click", () => {
-    erase = true;
-});
-
-
-paintButton.addEventListener("click", () => {
-    erase = false;
-});
-
-
-gridWidth.addEventListener("input", () => {
-    widthValue.innerHTML = gridWidth.value;
-});
-
-
-gridHeight.addEventListener("input", () => {
-    heightValue.innerHTML = gridHeight.value;
-});
-
-
-window.onload = () => {
-    gridHeight.value = 0;
-    gridWidth.value = 0;
-}

@@ -7,11 +7,14 @@
 
 body {
     background-color: #43a047;
+    overflow: auto;
 }
 
 .wrapper {
     background-color: #fff;
-    width: 80vmin;
+    width: 100%;
+    height: 100%;
+    white-space: nowrap;
     position: absolute;
     transform: translate(-50%, -50%);
     top: 50%;
@@ -87,13 +90,29 @@ input[type="color"]::-moz-color-swatch {
 }
 
 .gridCol {
-    height: 1em;
-    width: 1em;
-    border: 1px solid #ddd;
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
 }
 
+
+
 .gridRow {
-    display: flex;
+    /*display: flex;*/
+    white-space: nowrap;
+    font-size: 0;
+}
+
+.gridRow:nth-child(5n) {
+    /*background-color: black;*/
+    /*border: 1px solid #000;*/
+}
+
+.gridRow:not(:nth-child(5n)) {
+    /*background-color: blue;*/
 }
 
 @media only screen and (max-width: 768px) {
