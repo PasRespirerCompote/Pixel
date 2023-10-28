@@ -99,21 +99,23 @@ input[type="color"]::-moz-color-swatch {
 }
 
 
+.gridCol:nth-child(5n) {
+    border-right: 1px solid #000;
+}
 
 .gridRow {
-    /*display: flex;*/
     white-space: nowrap;
     font-size: 0;
 }
 
 .gridRow:nth-child(5n) {
-    /*background-color: black;*/
-    /*border: 1px solid #000;*/
+    border-bottom: 1px solid #000;
 }
 
-.gridRow:not(:nth-child(5n)) {
-    /*background-color: blue;*/
-}
+/*.gridRow:not(:nth-child(5n)) {*/
+/*    !*background-color: blue;*!*/
+/*    border: 1px solid #000;*/
+/*}*/
 
 @media only screen and (max-width: 768px) {
     .gridCol {
@@ -122,3 +124,7 @@ input[type="color"]::-moz-color-swatch {
     }
 }
 
+
+.number {
+    z-index: 9999;
+}

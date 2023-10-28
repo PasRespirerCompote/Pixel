@@ -8,6 +8,10 @@ let eraseButton = document.getElementById("erase-btn");
 let paintButton = document.getElementById("paint-btn");
 let widthValue = document.getElementById("width-value");
 let heightValue = document.getElementById("height-value");
+let number = document.querySelectorAll(".number");
+
+const gridRows = document.querySelectorAll('.gridRow');
+const gridCols = document.querySelectorAll('.gridCol');
 
 
 // const predefinedColors = [
@@ -137,6 +141,7 @@ let deviceType = "";
 let draw = false;
 let erase = false;
 
+let grid = [];
 
 const isTouchDevice = () => {
     try {
@@ -159,7 +164,6 @@ createGridButton.addEventListener("click", () => {
 
 clearGridButton.addEventListener("click", () => {
     // container.innerHTML = "";
-    const gridCols = document.querySelectorAll('.gridCol');
     gridCols.forEach((col) => {
         col.style.backgroundColor = "transparent";
     });
@@ -196,7 +200,8 @@ window.onload = () => {
 const imageUpload = document.getElementById('image-upload');
 
 let imageWidth, imageHeight;
-
+let rows = [];
+let cols = [];
 
 imageUpload.addEventListener('change', function (e) {
     const file = e.target.files[0];
@@ -211,6 +216,27 @@ imageUpload.addEventListener('change', function (e) {
                 imageWidth = image.naturalWidth;
                 imageHeight = image.naturalHeight;
 
+                let blackCount = 0;
+                gridRows.forEach((row) => {
+                    if (row.style.backgroundColor === "#fff") {
+                        rows.push(blackCount);
+                        blackCount = 0;
+                    }
+                    else
+                        blackCount += 1;
+                });
+
+                blackCount = 0;
+
+                gridCols.forEach((col) => {
+                    if (col.style.backgroundColor === "#fff") {
+                        cols.push(blackCount);
+                        blackCount = 0;
+                    }
+                    else
+                        blackCount += 1;
+                });
+
                 createGrid(imageWidth, imageHeight);
             }
         };
@@ -222,8 +248,11 @@ imageUpload.addEventListener('change', function (e) {
 
 let createGrid = ((width, height) => {
     container.innerHTML = "";
+    grid = [];
 
     for (let i = 0; i < height; i++) {
+        let row = [];
+
         let divRow = document.createElement("div");
         divRow.classList.add("gridRow");
 
@@ -253,15 +282,22 @@ let createGrid = ((width, height) => {
                         elementId.style.backgroundColor = "transparent";
                 }
 
+                // elementId.textContent = "6"
+                // number.forEach((n) => {
+                //     n.style.display = "block";
+                // });
+
             });
 
             col.addEventListener(events[deviceType].up, () => {
                 draw = false;
             });
 
+            row.push(col);
             divRow.appendChild(col);
         }
 
+        grid.push(row);
         container.appendChild(divRow);
     }
 });
