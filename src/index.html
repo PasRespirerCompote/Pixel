@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="idth=device-width">
+    <meta name="viewport" content="width=device-width">
 
   <link rel="stylesheet" href="style.css">
     <title>Pixel Art</title>
@@ -11,19 +11,6 @@
 <body>
     <div class="wrapper">
         <div class="options">
-            <div class="opt-wrapper">
-                <div class="slider">
-                    <label for="width-range">Grid Width</label>
-                    <input type="range" id="width-range" min="1" max="80000">
-                    <span id="width-value">0</span>
-                </div>
-                <div class="slider">
-                    <label for="height-range">Grid Height</label>
-                    <input type="range" id="height-range" min="1" max="80000">
-                    <span id="height-value">0</span>
-                </div>
-            </div>
-
             <div class="opt-wrapper">
                 <button id="submit-grid">Create Grid</button>
                 <button id="clear-grid">Clear Grid</button>
@@ -33,8 +20,10 @@
                 <input type="file" id="image-upload" accept="/images/*">
             </div>
         </div>
-        <div class="container" style="display: block">
-            <div class="number" style="display: block;"></div>
+        <div id="up-header-container"></div>
+        <div class="main-container">
+            <div id="left-header-container"></div>
+            <div class="container" style="display: block"></div>
         </div>
     </div>
 
